@@ -262,11 +262,6 @@ export class AgentBridgeService {
 
     await thread.startTyping();
 
-    // Keep typing indicator alive (Telegram's expires after ~5s)
-    const typingInterval = setInterval(() => {
-      thread.startTyping().catch(() => {});
-    }, 4000);
-
     // Fetch channel context for Discord context injection
     const channelContext = await this.fetchChannelContext(thread);
 
@@ -296,7 +291,6 @@ export class AgentBridgeService {
       await thread.post(`**Agent Execution Failed**\n\`\`\`\n${msg}\n\`\`\``);
     } finally {
       AgentBridgeService.activeThreads.delete(thread.id);
-      clearInterval(typingInterval);
       // In queue mode, reaction is removed by the bot-callback webhook on completion
       if (!queueMode) {
         await this.removeReceivedReaction(thread, message, client);
@@ -366,11 +360,6 @@ export class AgentBridgeService {
     );
     await thread.startTyping();
 
-    // Keep typing indicator alive (Telegram's expires after ~5s)
-    const typingInterval = setInterval(() => {
-      thread.startTyping().catch(() => {});
-    }, 4000);
-
     try {
       // executeWithCallback handles progress message (post + edit at each step)
       await this.executeWithCallback(thread, mergedMessage, {
@@ -399,7 +388,6 @@ export class AgentBridgeService {
       await thread.post(`**Agent Execution Failed**. Details:\n\`\`\`\n${errMsg}\n\`\`\``);
     } finally {
       AgentBridgeService.activeThreads.delete(thread.id);
-      clearInterval(typingInterval);
       // In queue mode, reaction is removed by the bot-callback webhook on completion
       if (!queueMode) {
         await this.removeReceivedReaction(thread, message, opts.client);
