@@ -679,6 +679,13 @@
       "when": 1774355637598,
       "tag": "0096_add_notification_title",
       "breakpoints": true
+    },
+    {
+      "idx": 97,
+      "version": "7",
+      "when": 1774361934253,
+      "tag": "0097_simplify_notification_columns",
+      "breakpoints": true
     }
   ],
   "version": "6"

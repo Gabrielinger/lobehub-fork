@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { boolean, index, jsonb, pgTable, text, uniqueIndex } from 'drizzle-orm/pg-core';
+import { boolean, index, pgTable, text, uniqueIndex } from 'drizzle-orm/pg-core';
 
 import { idGenerator } from '../utils/idGenerator';
 import { createdAt, timestamptz, updatedAt } from './_helpers';
@@ -22,17 +22,10 @@ export const notifications = pgTable(
     /** Specific scenario type, e.g. `budget_exhausted`, `subscription_expiring` */
     type: text('type').notNull(),
 
-    /** i18n key for notification title, rendered via react-i18next */
-    titleKey: text('title_key'),
-    /** Pre-rendered title text, used for email subject and i18n fallback */
-    title: text('title'),
-
-    /** i18n key for frontend rendering via react-i18next */
-    contentKey: text('content_key').notNull(),
-    /** Interpolation params for the i18n key */
-    contentParams: jsonb('content_params').$type<Record<string, unknown>>(),
-    /** Pre-rendered markdown/plain text, used for email body and i18n fallback */
-    content: text('content'),
+    /** Notification title, used for email subject and inbox display */
+    title: text('title').notNull(),
+    /** Notification body text */
+    content: text('content').notNull(),
 
     /** Idempotency key — same (userId, dedupeKey) pair prevents duplicate notifications */
     dedupeKey: text('dedupe_key'),

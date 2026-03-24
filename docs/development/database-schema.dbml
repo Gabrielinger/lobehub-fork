@@ -927,11 +927,8 @@ table notifications {
   user_id text [not null]
   category text [not null]
   type text [not null]
-  title_key text
-  title text
-  content_key text [not null]
-  content_params jsonb
-  content text
+  title text [not null]
+  content text [not null]
   dedupe_key text
   action_url text
   is_read boolean [not null, default: false]
