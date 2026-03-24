@@ -1,0 +1,6 @@
+export default {
+  image_generation_completed: 'Image "{{prompt}}" generated successfully',
+  image_generation_completed_title: 'Image Generated',
+  video_generation_completed: 'Video "{{prompt}}" generated successfully',
+  video_generation_completed_title: 'Video Generated',
+} as const;
