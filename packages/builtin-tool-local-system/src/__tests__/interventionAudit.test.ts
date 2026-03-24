@@ -51,7 +51,7 @@ describe('pathScopeAudit', () => {
     });
 
     it('should return true when file_path is outside working directory', () => {
-      expect(pathScopeAudit({ file_path: '/tmp/secret.txt' }, metadata)).toBe(true);
+      expect(pathScopeAudit({ file_path: '/home/other/secret.txt' }, metadata)).toBe(true);
     });
 
     it('should return true when directory is outside working directory', () => {
@@ -128,6 +128,42 @@ describe('pathScopeAudit', () => {
       expect(
         pathScopeAudit(
           { path: '/Users/me/project/src/file.ts', scope: '/Users/me/project' },
+          metadata,
+        ),
+      ).toBe(false);
+    });
+  });
+
+  describe('safe path exclusions', () => {
+    it('should return false for /tmp paths even outside working directory', () => {
+      expect(pathScopeAudit({ path: '/tmp/test-file.ts' }, metadata)).toBe(false);
+      expect(pathScopeAudit({ file_path: '/tmp/secret.txt' }, metadata)).toBe(false);
+      expect(pathScopeAudit({ directory: '/tmp' }, metadata)).toBe(false);
+      expect(pathScopeAudit({ path: '/tmp/subdir/file.ts' }, metadata)).toBe(false);
+    });
+
+    it('should return false for /var/tmp paths even outside working directory', () => {
+      expect(pathScopeAudit({ path: '/var/tmp/output.log' }, metadata)).toBe(false);
+      expect(pathScopeAudit({ directory: '/var/tmp' }, metadata)).toBe(false);
+    });
+
+    it('should still require intervention when mixing safe and unsafe paths', () => {
+      expect(
+        pathScopeAudit(
+          {
+            items: [{ oldPath: '/tmp/a.ts', newPath: '/Users/me/other/b.ts' }],
+          },
+          metadata,
+        ),
+      ).toBe(true);
+    });
+
+    it('should return false when all items paths are in safe directories', () => {
+      expect(
+        pathScopeAudit(
+          {
+            items: [{ oldPath: '/tmp/a.ts', newPath: '/tmp/b.ts' }],
+          },
           metadata,
         ),
       ).toBe(false);
