@@ -347,6 +347,7 @@ export const imageRouter = router({
             duration,
             model,
             prompt: params.prompt,
+            taskId,
             topicId: generationTopicId,
             userId: ctx.userId,
           }).catch((err) => console.error('[image-async] notification failed:', err));

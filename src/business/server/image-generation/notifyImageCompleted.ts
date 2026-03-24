@@ -2,6 +2,7 @@ interface NotifyImageCompletedParams {
   duration: number;
   model: string;
   prompt: string;
+  taskId: string;
   topicId?: string;
   userId: string;
 }

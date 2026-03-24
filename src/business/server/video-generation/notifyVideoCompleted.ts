@@ -1,6 +1,7 @@
 interface NotifyVideoCompletedParams {
   model: string;
   prompt: string;
+  taskId: string;
   topicId?: string;
   userId: string;
 }

@@ -205,6 +205,7 @@ export const POST = async (req: Request, { params }: { params: Promise<{ provide
     notifyVideoCompleted({
       model: resolvedModel,
       prompt: batch?.prompt ?? '',
+      taskId: asyncTask.id,
       topicId: batch?.generationTopicId,
       userId: asyncTask.userId,
     }).catch((err) => console.error('[video-webhook] notification failed:', err));
