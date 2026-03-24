@@ -1,6 +1,11 @@
 export default {
   image_generation_completed: 'Image "{{prompt}}" generated successfully',
   image_generation_completed_title: 'Image Generated',
+  inbox: {
+    empty: 'No notifications yet',
+    markAllRead: 'Mark all as read',
+    title: 'Notifications',
+  },
   video_generation_completed: 'Video "{{prompt}}" generated successfully',
   video_generation_completed_title: 'Video Generated',
 } as const;
