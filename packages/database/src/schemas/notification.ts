@@ -22,6 +22,11 @@ export const notifications = pgTable(
     /** Specific scenario type, e.g. `budget_exhausted`, `subscription_expiring` */
     type: text('type').notNull(),
 
+    /** i18n key for notification title, rendered via react-i18next */
+    titleKey: text('title_key'),
+    /** Pre-rendered title text, used for email subject and i18n fallback */
+    title: text('title'),
+
     /** i18n key for frontend rendering via react-i18next */
     contentKey: text('content_key').notNull(),
     /** Interpolation params for the i18n key */
