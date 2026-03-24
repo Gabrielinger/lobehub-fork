@@ -10,6 +10,7 @@ import { SystemAgentService } from '@/server/services/systemAgent';
 import type { BotProviderConfig, PlatformClient, PlatformMessenger, UsageStats } from './platforms';
 import { platformRegistry } from './platforms';
 import { renderError, renderFinalReply, renderStepProgress, splitMessage } from './replyTemplate';
+import { stopTypingKeepAlive } from './typingKeepAlive';
 
 const log = debug('lobe-server:bot:callback');
 
@@ -77,6 +78,9 @@ export class BotCallbackService {
         await this.handleStep(body, messenger, progressMessageId, client);
       }
     } else if (type === 'completion') {
+      // Stop typing keepalive before sending the final message
+      stopTypingKeepAlive(platformThreadId);
+
       await this.handleCompletion(
         body,
         messenger,
