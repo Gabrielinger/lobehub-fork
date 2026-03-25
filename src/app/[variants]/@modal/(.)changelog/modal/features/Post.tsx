@@ -19,9 +19,15 @@ const Post = async ({
   id,
   versionRange,
   locale,
-}: ChangelogIndexItem & { branch?: string; locale: Locales; mobile?: boolean }) => {
+  post,
+}: ChangelogIndexItem & {
+  branch?: string;
+  locale: Locales;
+  mobile?: boolean;
+  post?: ChangelogIndexItem;
+}) => {
   const changelogService = new ChangelogService();
-  const data = await changelogService.getPostById(id, { locale });
+  const data = await changelogService.getPostById(id, { locale, post });
   const url = urlJoin(OFFICIAL_SITE, 'changelog', id);
 
   if (!data) return null;

@@ -81,10 +81,10 @@ export class ChangelogService {
     return index.find((item) => item.id === id);
   }
 
-  async getPostById(id: string, options?: { locale?: Locales }) {
+  async getPostById(id: string, options?: { locale?: Locales; post?: ChangelogIndexItem }) {
     await this.cdnInit();
     try {
-      const post = await this.getIndexItemById(id);
+      const post = options?.post ?? (await this.getIndexItemById(id));
 
       const filename = options?.locale?.startsWith('zh') ? `${id}.zh-CN.mdx` : `${id}.mdx`;
       const url = this.genUrl(urlJoin(this.config.docsPath, filename));

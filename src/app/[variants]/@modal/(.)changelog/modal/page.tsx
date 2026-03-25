@@ -25,7 +25,7 @@ const Page = async (props: DynamicLayoutProps) => {
     <>
       {data?.map((item) => (
         <Suspense fallback={<Loading />} key={item.id}>
-          <Post locale={locale as any} mobile={isMobile} {...item} />
+          <Post locale={locale as any} mobile={isMobile} post={item} {...item} />
         </Suspense>
       ))}
       <UpdateChangelogStatus currentId={data[0]?.id} />

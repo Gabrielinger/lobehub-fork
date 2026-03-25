@@ -19,9 +19,15 @@ const Post = async ({
   mobile,
   versionRange,
   locale,
-}: ChangelogIndexItem & { branch?: string; locale: Locales; mobile?: boolean }) => {
+  post,
+}: ChangelogIndexItem & {
+  branch?: string;
+  locale: Locales;
+  mobile?: boolean;
+  post?: ChangelogIndexItem;
+}) => {
   const changelogService = new ChangelogService();
-  const data = await changelogService.getPostById(id, { locale });
+  const data = await changelogService.getPostById(id, { locale, post });
 
   if (!data || !data.title) return null;
 

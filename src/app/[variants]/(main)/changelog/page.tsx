@@ -20,6 +20,8 @@ import { RouteVariants } from '@/utils/server/routeVariants';
 import GridLayout from './features/GridLayout';
 import Post from './features/Post';
 
+export const dynamic = 'force-dynamic';
+
 export const generateMetadata = async (props: DynamicLayoutProps) => {
   const locale = await RouteVariants.getLocale(props);
   const { t } = await translation('metadata', locale);
@@ -62,7 +64,7 @@ const Page = async (props: DynamicLayoutProps) => {
                 </GridLayout>
               }
             >
-              <Post locale={locale} mobile={isMobile} {...item} />
+              <Post locale={locale} mobile={isMobile} post={item} {...item} />
             </Suspense>
           </Fragment>
         ))}
